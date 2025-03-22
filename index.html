@@ -10,8 +10,84 @@
 </head>
 
 <body>
-
      <div class="container">
+          <header class="navbar">
+               <h1>Form Designer</h1>
+               <div class="actions">
+                    <button id="themeToggle" class="btn">Toggle Theme</button>
+                    <button id="previewBtn" class="btn">Preview</button>
+                    <button id="saveBtn" class="btn primary">Save</button>
+               </div>
+          </header>
+
+          <main class="workspace">
+               <aside class="components">
+                    <h2 class="sidebar-title">Components</h2>
+                    <ul class="component-list">
+
+                         <li class="component-item">
+                              <button class="component-header">
+                                   Input
+                                   <span class="expand-icon">+</span>
+                              </button>
+                              <div class="component-content">
+                                   <button class="add-btn" data-type="input">Add Input Field</button>
+                              </div>
+                         </li>
+
+                         <li class="component-item">
+                              <button class="component-header">
+                                   Select
+                                   <span class="expand-icon">+</span>
+                              </button>
+                              <div class="component-content">
+                                   <button class="add-btn" data-type="select">Add Select Menu</button>
+                              </div>
+                         </li>
+
+                         <li class="component-item">
+                              <button class="component-header">
+                                   Textarea
+                                   <span class="expand-icon">+</span>
+                              </button>
+                              <div class="component-content">
+                                   <button class="add-btn" data-type="textarea">Add Text Area</button>
+                              </div>
+                         </li>
+                         <li class="component-item">
+                              <button class="component-header">
+                                   Checkbox
+                                   <span class="expand-icon">+</span>
+                              </button>
+                              <div class="component-content">
+                                   <button class="add-btn" data-type="checkbox">Add Checkbox</button>
+                              </div>
+                         </li>
+                    </ul>
+               </aside>
+
+               <section class="form-canvas" id="formCanvas">
+                    <!-- dynamic form data will be added -->
+               </section>
+
+          </main>
+
+     </div>
+
+     <!-- Preview Modal -->
+     <div id="previewModal" class="modal">
+          <div id="modalContent" class="modal-content">
+               <div class="modal-header">
+                    <h2>Form Preview</h2>
+                    <button class="close-btn">&times;</button>
+               </div>
+               <div class="modal-body">
+                    <div id="previewForm"></div>
+                    <div class="preview-actions">
+                         <button id="copyHtmlBtn" class="btn">Copy HTML</button>
+                    </div>
+               </div>
+          </div>
      </div>
 </body>
 
