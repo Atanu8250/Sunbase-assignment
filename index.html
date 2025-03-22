@@ -7,6 +7,7 @@
      <title>Sunbase Frontend Assignment</title>
      <link rel="stylesheet" href="style.css">
      <script src="script.js" defer></script>
+     <script src="https://kit.fontawesome.com/eacbf9e7d4.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -30,8 +31,16 @@
                                    Input
                                    <span class="expand-icon">+</span>
                               </button>
+
                               <div class="component-content">
-                                   <button class="add-btn" data-type="input">Add Input Field</button>
+                                   <form class="component-form">
+                                        <input type="text" placeholder="Enter Label" class="label-input">
+                                        <input type="text" placeholder="Enter Placeholder" class="placeholder-input">
+                                        <div class="component-actions">
+                                             <button type="button" class="btn cancel">Cancel</button>
+                                             <button type="submit" class="btn success" data-type="input">Add</button>
+                                        </div>
+                                   </form>
                               </div>
                          </li>
 
@@ -40,8 +49,17 @@
                                    Select
                                    <span class="expand-icon">+</span>
                               </button>
+
                               <div class="component-content">
-                                   <button class="add-btn" data-type="select">Add Select Menu</button>
+                                   <form class="component-form">
+                                        <input type="text" placeholder="Enter Label" class="label-input">
+                                        <input type="text" placeholder="Enter Options (, separated)"
+                                             class="placeholder-input">
+                                        <div class="component-actions">
+                                             <button type="button" class="btn cancel">Cancel</button>
+                                             <button type="submit" class="btn success" data-type="select">Add</button>
+                                        </div>
+                                   </form>
                               </div>
                          </li>
 
@@ -50,8 +68,16 @@
                                    Textarea
                                    <span class="expand-icon">+</span>
                               </button>
+
                               <div class="component-content">
-                                   <button class="add-btn" data-type="textarea">Add Text Area</button>
+                                   <form class="component-form">
+                                        <input type="text" placeholder="Enter Label" class="label-input">
+                                        <input type="text" placeholder="Enter Placeholder" class="placeholder-input">
+                                        <div class="component-actions">
+                                             <button type="button" class="btn cancel">Cancel</button>
+                                             <button type="submit" class="btn success" data-type="textarea">Add</button>
+                                        </div>
+                                   </form>
                               </div>
                          </li>
                          <li class="component-item">
@@ -59,15 +85,24 @@
                                    Checkbox
                                    <span class="expand-icon">+</span>
                               </button>
+
                               <div class="component-content">
-                                   <button class="add-btn" data-type="checkbox">Add Checkbox</button>
+                                   <form class="component-form">
+                                        <input type="text" placeholder="Enter Label" class="label-input">
+                                        <div class="component-actions">
+                                             <button type="button" class="btn cancel">Cancel</button>
+                                             <button type="submit" class="btn success" data-type="checkbox">Add</button>
+                                        </div>
+                                   </form>
                               </div>
                          </li>
                     </ul>
                </aside>
 
                <section class="form-canvas" id="formCanvas">
-                    <!-- dynamic form data will be added -->
+                    <div class="form">
+                         <!-- dynamic form data will be added -->
+                    </div>
                </section>
 
           </main>
@@ -79,15 +114,22 @@
           <div id="modalContent" class="modal-content">
                <div class="modal-header">
                     <h2>Form Preview</h2>
-                    <button class="close-btn">&times;</button>
+                    <button class="close-btn">
+                         <i class="fa-solid fa-close"></i>
+                    </button>
                </div>
                <div class="modal-body">
                     <div id="previewForm"></div>
                     <div class="preview-actions">
-                         <button id="copyHtmlBtn" class="btn">Copy HTML</button>
+                         <button onclick="copyHTML()" id="copyHtmlBtn" class="btn">Copy HTML</button>
                     </div>
                </div>
           </div>
+     </div>
+
+     <!-- Toast -->
+     <div class="toast">
+          <p class="toast-msg"></p>
      </div>
 </body>
 

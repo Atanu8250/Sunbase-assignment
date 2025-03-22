@@ -6,6 +6,8 @@
      --component-bg: #f3f4f6;
      --border-color: #e5e7eb;
      --hover-color: #dbeafe;
+     --success-color: #22c55e;
+     --danger-color: #ef4444;
 }
 
 /* Dark Theme color config*/
@@ -22,6 +24,11 @@
      margin: 0;
      padding: 0;
      box-sizing: border-box;
+}
+
+*:focus-visible{
+     outline: 3px solid var(--border-color) !important;
+     outline-offset: -3px;
 }
 
 body {
@@ -119,6 +126,27 @@ header.navbar {
      transform: rotate(45deg);
 }
 
+.component-form {
+     display: flex;
+     flex-direction: column;
+     gap: 1rem;
+}
+
+.component-form input {
+     width: 100%;
+     padding: 0.5rem;
+     border: 1px solid var(--border-color);
+     background: var(--bg-color);
+     color: var(--text-color);
+}
+
+.component-actions {
+     display: flex;
+     gap: 0.5rem;
+     justify-content: flex-end;
+     margin-top: 0.25rem;
+}
+
 .add-btn {
      width: 100%;
      padding: 0.5rem;
@@ -137,9 +165,22 @@ header.navbar {
      background: var(--component-bg);
      padding: 2rem;
      min-height: 600px;
+     overflow-y: auto;
 }
 
-.form {
+.form-canvas::-webkit-scrollbar {
+     width: 0.5rem;
+}
+
+.form-canvas::-webkit-scrollbar-track {
+     box-shadow: inset 0 0 5px var(--bg-color);
+}
+
+.form-canvas::-webkit-scrollbar-thumb {
+     background: var(--text-color);
+}
+
+.form-container {
      background: var(--bg-color);
      margin: 0 auto;
      padding: 2rem;
@@ -154,7 +195,7 @@ header.navbar {
      width: 100%;
 }
 
-.field-info{
+.field-info {
      display: flex;
      justify-content: space-between;
      align-items: center;
@@ -162,36 +203,63 @@ header.navbar {
 }
 
 /* Only used for the checkbox Label */
-.field-info>.checkbox{
+.field-info>.checkbox {
      display: flex;
      justify-content: flex-start;
      align-items: center;
      gap: 1rem;
 }
 
-.checkbox-field{
+.checkbox-field {
      height: 1rem;
      aspect-ratio: 1;
 }
 
-.field-label{
+.field-label {
      font-weight: 500;
 }
 
-.field-close-btn{
+.field-action-btns {
      font-size: 0.8rem;
      cursor: pointer;
+     display: flex;
+     gap: 0.5rem;
+}
+
+.field-action-btns.hide{
+     display: none;
+}
+
+.field-action-btns>button {
+     all: unset;
+     background-color: transparent;
+     border-radius: 50rem;
+     padding: 0.25rem 0.5rem;
+     transition: background-color 0.3s, color 0.3s;
+}
+
+.field-action-btns>button:hover {
+     background-color: var(--component-bg);
+}
+
+.field-action-btns>button.edit:hover {
+     color: var(--success-color)
+}
+
+.field-action-btns>button.delete:hover {
+     color: var(--danger-color)
 }
 
 .field {
      padding: 0.5rem;
-     font-size: 0.8rem;
      border: 1px solid var(--border-color);
      width: 100%;
      color: var(--text-color);
+     resize: vertical;
 }
 
-.field,.checkbox-field{
+.field,
+.checkbox-field {
      background: var(--bg-color);
      accent-color: var(--bg-color);
 }
@@ -238,6 +306,7 @@ header.navbar {
      background: var(--bg-color);
      color: var(--text-color);
      cursor: pointer;
+     transition: opacity 0.3s;
 }
 
 .btn.primary {
@@ -246,8 +315,20 @@ header.navbar {
      border: none;
 }
 
+.btn.success {
+     background: var(--success-color);
+     color: white;
+     border: none;
+}
+
+.btn.danger {
+     background: var(--danger-color);
+     color: white;
+     border: none;
+}
+
 .btn:hover {
-     background: var(--hover-color);
+     opacity: 0.8;
 }
 
 .modal {
