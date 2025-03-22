@@ -8,6 +8,7 @@ const copyBtn = document.getElementById('copyHtmlBtn');
 const componentHeaders = document.querySelectorAll('.component-header');
 const componentForms = document.querySelectorAll('.component-form');
 const formCanvas = document.getElementById('formCanvas');
+const formContainer = document.querySelector('.form-container');
 const previewForm = document.getElementById('previewForm');
 
 
@@ -56,7 +57,6 @@ function setTheme(theme) {
 }
 
 function showPreview() {
-     // generateFormPreview();
      modal.style.display = 'block';
 }
 
@@ -120,18 +120,35 @@ function renderFormElements(field) {
      // Create the main contianer
      const fieldBox = document.createElement('div');
      fieldBox.classList.add('field-box');
+     fieldBox.dataset.id = field.id;
+     fieldBox.draggable = true;
+
+     fieldBox.addEventListener('dragstart', () => {
+          fieldBox.classList.add('dragging');
+     })
+
+     fieldBox.addEventListener('dragend', () => {
+          fieldBox.classList.remove('dragging');
+     })
 
      // Delete button 
      const deleteBtn = document.createElement('button');
      deleteBtn.classList.add('delete', 'field-action-btn');
-     deleteBtn.onclick = () => { deleteElement(field.id) };
+     deleteBtn.onclick = deleteElement;
 
      const trashIcon = document.createElement('i');
      trashIcon.classList.add('fa-solid', 'fa-trash');
-
+     
      deleteBtn.appendChild(trashIcon);
      fieldBox.appendChild(deleteBtn);
 
+     const dragIcon = document.createElement('i');
+     dragIcon.classList.add("fa-solid", "fa-grip-vertical", "drag-icon");
+     fieldBox.appendChild(dragIcon);
+
+     const fieldGroups = document.createElement('div');
+     fieldGroups.style.width = `100%`;
+     
      // First field group
      const fieldGroup1 = document.createElement('div');
      fieldGroup1.classList.add('field-group');
@@ -141,7 +158,7 @@ function renderFormElements(field) {
      label1.textContent = `Enter ${field.type} label`;
 
      const input1 = document.createElement('input');
-     input1.onchange = (e) => udpateFormData(e, field.id, 'label');
+     input1.onchange = (e) => updateFormData(e, field.id, 'label');
      input1.type = 'text';
      input1.placeholder = `Enter ${field.type} label`;
      input1.classList.add('field');
@@ -149,7 +166,7 @@ function renderFormElements(field) {
 
      fieldGroup1.appendChild(label1);
      fieldGroup1.appendChild(input1);
-     fieldBox.appendChild(fieldGroup1);
+     fieldGroups.appendChild(fieldGroup1)
 
      // --- Second field group (placeholder) ---
      if (field.type !== 'checkbox') {
@@ -164,7 +181,7 @@ function renderFormElements(field) {
           if (field.type === 'input' || field.type === 'textarea') {
                const input2 = document.createElement('input');
 
-               input2.onchange = (e) => udpateFormData(e, field.id, 'placeholder');
+               input2.onchange = (e) => updateFormData(e, field.id, 'placeholder');
                input2.classList.add('field');
 
                label2.textContent = `Enter ${field.type} placeholder`;
@@ -180,7 +197,7 @@ function renderFormElements(field) {
                fieldGroup2.appendChild(optionsBox);
 
                const addOptionBtn = document.createElement('button');
-               addOptionBtn.classList.add('add-option', 'btn')
+               addOptionBtn.classList.add('add-option', 'btn', 'success')
                addOptionBtn.textContent = 'Add Option';
                addOptionBtn.onclick = () => {
                     // Form data udpate
@@ -197,15 +214,15 @@ function renderFormElements(field) {
                fieldGroup2.appendChild(addOptionBtn)
           }
 
-
-          fieldBox.appendChild(fieldGroup2);
+          fieldGroups.appendChild(fieldGroup2);
      }
+     fieldBox.appendChild(fieldGroups);
 
      return fieldBox;
 
 }
 
-function udpateFormData(event, fieldId, keyType) {
+function updateFormData(event, fieldId, keyType) {
      const updatedValue = event.target.value;
 
      DefaultformData.forEach(formData => {
@@ -245,14 +262,11 @@ function renderOptionFields(field) {
           close.innerHTML = '<i class="fa-solid fa-close"></i>';
           close.onclick = (e) => {
                // Form data udpate
-               DefaultformData.forEach(formData => {
-                    if (formData.id === field.id) {
-                         formData.options = formData.options.filter((_, i) => i !== optInd);
-                    }
-                    return formData;
-               })
+               const fieldData = DefaultformData.find(f => f.id === field.id);
+               if (fieldData) fieldData.options.splice(optInd, 1);
+
                // Remove the node from the DOM
-               e.target.closest('div').remove();
+               updateFormCanvas();
           };
           singleOption.append(option, close)
           optionsBox.appendChild(singleOption);
@@ -271,17 +285,74 @@ function updateFormCanvas(formData = DefaultformData) {
      formCanvas.innerHTML = '';
      formCanvas.classList.remove('empty-state');
 
+     // Use fragment for Batch DOM update for better performance
+     const fragment = document.createDocumentFragment();
      const formContainer = document.createElement('div')
      formContainer.classList.add('form-container');
      formContainer.innerHTML = '';
+
+     formContainer.addEventListener('dragover', (e) => {
+          e.preventDefault();
+
+          const draggingItem = document.querySelector('.dragging');
+          const draggingItemID = draggingItem.dataset.id;
+          const afterElement = getDragAfterElement(formContainer, e.clientY);
+          const afterElementID = afterElement.dataset.id;
+
+          const draggingItemFieldObj = DefaultformData.find(el => el.id === draggingItemID);
+          const afterElementFieldObj = DefaultformData.find(el => el.id === afterElementID);
+
+
+          if (afterElement == null) {
+               formContainer.appendChild(draggingItem);
+          } else {
+               formContainer.insertBefore(draggingItem, afterElement);
+          }
+     })
 
      formData.forEach((field) => {
           let fieldBox = renderFormElements(field);
           formContainer.appendChild(fieldBox);
      })
 
-     formCanvas.appendChild(formContainer);
+     fragment.appendChild(formContainer)
+     formCanvas.appendChild(fragment);
 }
+
+function getDragAfterElement(container, y) {
+     // determine all the elements of the container in which we are dragging over
+     const draggableElements = [...container.querySelectorAll('[draggable]:not(.dragging)')];
+
+     return draggableElements.reduce((closest, child) => {
+          // get the box DOM-details where we are dropping the dragging elem
+          const box = child.getBoundingClientRect();
+
+          // offset  = mousePosition - center of the nearest draggable elem
+          const offset = (y - (box.top + (box.height / 2)));
+
+          if (offset < 0 && offset > closest.offset) {
+               return { offset, element: child }
+          } else return closest;
+
+     }, { offset: Number.NEGATIVE_INFINITY }).element;
+}
+
+
+const reorderArray = (arr, draggingEl, afterEl) => {
+     const draggingIndex = arr.findIndex(el => el.id === draggingEl.id);
+     const afterIndex = arr.findIndex(el => el.id === afterEl.id);
+
+     if (draggingIndex === -1 || afterIndex === -1) return arr;
+
+     // Remove the dragging element
+     const [removed] = arr.splice(draggingIndex, 1);
+
+     // Insert it before the after element
+     const newIndex = afterIndex - 1;
+     arr.splice(newIndex, 0, removed);
+
+     return arr;
+};
 
 function addFormElement(formElementObj) {
      const element = {
@@ -298,8 +369,9 @@ function addFormElement(formElementObj) {
      updateFormCanvas();
 }
 
-function deleteElement(id) {
-     DefaultformData = DefaultformData.filter(form => form.id !== id);
+function deleteElement(e) {
+     const id = e.target.closest('.field-box').dataset.id;
+     DefaultformData = DefaultformData.filter(field => field.id !== id);
      updateFormCanvas();
 }
 
@@ -370,7 +442,6 @@ document.getElementById('saveBtn').onclick = () => {
 document.getElementById('copyHtmlBtn').onclick = () => {
      copyHTML();
 }
-
 
 
 
