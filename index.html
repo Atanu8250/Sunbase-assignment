@@ -27,74 +27,30 @@
                     <ul class="component-list">
 
                          <li class="component-item">
-                              <button class="component-header">
+                              <button class="component-header" data-type="input">
                                    Input
                                    <span class="expand-icon">+</span>
                               </button>
-
-                              <div class="component-content">
-                                   <form class="component-form">
-                                        <input type="text" placeholder="Enter Label" class="label-input">
-                                        <input type="text" placeholder="Enter Placeholder" class="placeholder-input">
-                                        <div class="component-actions">
-                                             <button type="button" class="btn cancel">Cancel</button>
-                                             <button type="submit" class="btn success" data-type="input">Add</button>
-                                        </div>
-                                   </form>
-                              </div>
                          </li>
 
                          <li class="component-item">
-                              <button class="component-header">
+                              <button class="component-header" data-type="select">
                                    Select
                                    <span class="expand-icon">+</span>
                               </button>
-
-                              <div class="component-content">
-                                   <form class="component-form">
-                                        <input type="text" placeholder="Enter Label" class="label-input">
-                                        <input type="text" placeholder="Enter Options (, separated)"
-                                             class="placeholder-input">
-                                        <div class="component-actions">
-                                             <button type="button" class="btn cancel">Cancel</button>
-                                             <button type="submit" class="btn success" data-type="select">Add</button>
-                                        </div>
-                                   </form>
-                              </div>
                          </li>
 
                          <li class="component-item">
-                              <button class="component-header">
+                              <button class="component-header" data-type="textarea">
                                    Textarea
                                    <span class="expand-icon">+</span>
                               </button>
-
-                              <div class="component-content">
-                                   <form class="component-form">
-                                        <input type="text" placeholder="Enter Label" class="label-input">
-                                        <input type="text" placeholder="Enter Placeholder" class="placeholder-input">
-                                        <div class="component-actions">
-                                             <button type="button" class="btn cancel">Cancel</button>
-                                             <button type="submit" class="btn success" data-type="textarea">Add</button>
-                                        </div>
-                                   </form>
-                              </div>
                          </li>
                          <li class="component-item">
-                              <button class="component-header">
+                              <button class="component-header" data-type="checkbox">
                                    Checkbox
                                    <span class="expand-icon">+</span>
                               </button>
-
-                              <div class="component-content">
-                                   <form class="component-form">
-                                        <input type="text" placeholder="Enter Label" class="label-input">
-                                        <div class="component-actions">
-                                             <button type="button" class="btn cancel">Cancel</button>
-                                             <button type="submit" class="btn success" data-type="checkbox">Add</button>
-                                        </div>
-                                   </form>
-                              </div>
                          </li>
                     </ul>
                </aside>
@@ -102,6 +58,7 @@
                <section class="form-canvas" id="formCanvas">
                     <div class="form">
                          <!-- dynamic form data will be added -->
+                         
                     </div>
                </section>
 
@@ -121,7 +78,7 @@
                <div class="modal-body">
                     <div id="previewForm"></div>
                     <div class="preview-actions">
-                         <button onclick="copyHTML()" id="copyHtmlBtn" class="btn">Copy HTML</button>
+                         <button id="copyHtmlBtn" class="btn">Copy HTML</button>
                     </div>
                </div>
           </div>
