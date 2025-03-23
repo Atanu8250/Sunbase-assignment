@@ -49,6 +49,8 @@ function setExistingTheme() {
           const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
           setTheme(prefersDark ? 'dark' : 'light');
      }
+
+     toggleThemebtn.checked = savedTheme === 'dark' ? true : false;
 }
 
 function setTheme(theme) {
@@ -421,7 +423,7 @@ function showToast(message) {
 
 
 // ================ Add Event-Listeners ================
-toggleThemebtn.addEventListener('click', () => {
+toggleThemebtn.addEventListener('change', () => {
      const existingTheme = document.body.getAttribute('data-theme');
      setTheme(existingTheme === 'dark' ? 'light' : 'dark');
 });
