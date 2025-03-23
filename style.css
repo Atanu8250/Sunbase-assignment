@@ -63,6 +63,8 @@ header.navbar {
      display: flex;
      justify-content: space-between;
      align-items: center;
+     flex-wrap: wrap;
+     gap: 1rem;
      padding: 1rem;
      border: 1px solid var(--border-color);
 }
@@ -286,7 +288,7 @@ header.navbar {
 
 .preview-field-box {
      background: var(--bg-color);
-     padding: 1rem;
+     padding: 0.5rem;
      width: 100%;
 }
 
@@ -364,6 +366,7 @@ header.navbar {
      height: 100%;
      background: rgba(0, 0, 0, 0.5);
      overflow-y: auto;
+     z-index: 10;
 }
 
 .modal-content {
