@@ -1,6 +1,6 @@
-# 🛠️ Visual Form Creator
+# 🛠️ Visual Form Editor
 
-A sleek and intuitive **Visual Form Creator** that allows users to dynamically build and preview HTML forms using **HTML, CSS, and Vanilla JavaScript**. The site offers smooth drag-and-drop functionality, live preview, and a JSON export feature, making form creation effortless and efficient.
+A sleek and intuitive **Visual Form Editor** that allows users to dynamically build and preview HTML forms using **HTML, CSS, and Vanilla JavaScript**. The site offers smooth drag-and-drop functionality, live preview, and a JSON export feature, making form creation effortless and efficient.
 
 ---
 
