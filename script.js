@@ -57,6 +57,7 @@ function setTheme(theme) {
 }
 
 function showPreview() {
+     showToast('Save the form to get latest preview! ⚠️')
      modal.style.display = 'block';
 }
 
@@ -295,7 +296,7 @@ function renderOptionFields(field) {
 function updateFormCanvas(formData = DefaultformData) {
      if (formData.length <= 0) {
           formCanvas.classList.add('empty-state');
-          formCanvas.innerHTML = `<h3>Add Components to check the preview here!</h3>`;
+          formCanvas.innerHTML = `<h3>Component list is Empty, add few to edit!</h3>`;
           return;
      }
 
@@ -404,11 +405,11 @@ function showToast(message) {
      setTimeout(() => {
           toastBox.classList.remove('show');
           toastBox.classList.add('hide');
-     }, 1500);
+     }, 2000);
 
      setTimeout(() => {
           toastContainer.removeChild(toastBox);
-     },1801)
+     },2301)
 }
 
 
