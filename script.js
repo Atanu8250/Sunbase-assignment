@@ -129,6 +129,23 @@ function renderFormElements(field) {
 
      fieldBox.addEventListener('dragend', () => {
           fieldBox.classList.remove('dragging');
+
+          const draggedItemID = fieldBox.dataset.id;
+          const afterElementID = fieldBox.nextSibling?.dataset.id;
+
+          const draggedItemIndex = DefaultformData.findIndex(el => el.id === draggedItemID);
+          const afterElementIndex = DefaultformData.findIndex(el => el.id === afterElementID);
+
+          const [draggedItem] = DefaultformData.splice(draggedItemIndex, 1);
+          if (afterElementID !== undefined) {
+               if (draggedItemIndex < afterElementIndex) {
+                    DefaultformData.splice(afterElementIndex - 1, 0, draggedItem);
+               } else {
+                    DefaultformData.splice(afterElementIndex, 0, draggedItem);
+               }
+          } else {
+               DefaultformData.push(draggedItem);
+          }
      })
 
      // Delete button 
@@ -138,7 +155,7 @@ function renderFormElements(field) {
 
      const trashIcon = document.createElement('i');
      trashIcon.classList.add('fa-solid', 'fa-trash');
-     
+
      deleteBtn.appendChild(trashIcon);
      fieldBox.appendChild(deleteBtn);
 
@@ -148,7 +165,7 @@ function renderFormElements(field) {
 
      const fieldGroups = document.createElement('div');
      fieldGroups.style.width = `100%`;
-     
+
      // First field group
      const fieldGroup1 = document.createElement('div');
      fieldGroup1.classList.add('field-group');
@@ -295,13 +312,7 @@ function updateFormCanvas(formData = DefaultformData) {
           e.preventDefault();
 
           const draggingItem = document.querySelector('.dragging');
-          const draggingItemID = draggingItem.dataset.id;
           const afterElement = getDragAfterElement(formContainer, e.clientY);
-          const afterElementID = afterElement.dataset.id;
-
-          const draggingItemFieldObj = DefaultformData.find(el => el.id === draggingItemID);
-          const afterElementFieldObj = DefaultformData.find(el => el.id === afterElementID);
-
 
           if (afterElement == null) {
                formContainer.appendChild(draggingItem);
@@ -336,23 +347,6 @@ function getDragAfterElement(container, y) {
 
      }, { offset: Number.NEGATIVE_INFINITY }).element;
 }
-
-
-const reorderArray = (arr, draggingEl, afterEl) => {
-     const draggingIndex = arr.findIndex(el => el.id === draggingEl.id);
-     const afterIndex = arr.findIndex(el => el.id === afterEl.id);
-
-     if (draggingIndex === -1 || afterIndex === -1) return arr;
-
-     // Remove the dragging element
-     const [removed] = arr.splice(draggingIndex, 1);
-
-     // Insert it before the after element
-     const newIndex = afterIndex - 1;
-     arr.splice(newIndex, 0, removed);
-
-     return arr;
-};
 
 function addFormElement(formElementObj) {
      const element = {
@@ -436,7 +430,7 @@ componentHeaders.forEach(header => {
 
 document.getElementById('saveBtn').onclick = () => {
      generateFormPreview();
-     console.log(JSON.stringify(DefaultformData));
+     console.log(JSON.stringify(DefaultformData, null, 2));
 }
 
 document.getElementById('copyHtmlBtn').onclick = () => {
