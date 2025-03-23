@@ -48,8 +48,9 @@ A sleek and intuitive **Visual Form Editor** that allows users to dynamically bu
 ## 💻 **Preview**
 
 ### 🔷 Form element editor
-![Screenshot 2025-03-23 160325](https://github.com/user-attachments/assets/f59ff841-c208-42b8-aa31-eeb5b994dfbf)
+![image](https://github.com/user-attachments/assets/03875757-fe48-4651-a6f2-ecc78a6d1798)
+
 
 ### 🔷 Form preview with toast message
-![Screenshot 2025-03-23 160403](https://github.com/user-attachments/assets/71c444f3-a80a-437f-9989-62a035e72c10)
+![image](https://github.com/user-attachments/assets/ec9f8a04-9f32-4623-8c92-4d690af7a154)
 
