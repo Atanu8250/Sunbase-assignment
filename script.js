@@ -362,6 +362,13 @@ function addFormElement(formElementObj) {
 
      DefaultformData.push(element);
      updateFormCanvas();
+
+     const formCanvas = document.getElementById('formCanvas');
+     formCanvas.scrollTo({
+          top: formCanvas.scrollHeight,
+          behavior: "smooth"
+     });;
+
      showToast(`${element.type} added in the form!`);
 }
 
@@ -409,7 +416,7 @@ function showToast(message) {
 
      setTimeout(() => {
           toastContainer.removeChild(toastBox);
-     },2301)
+     }, 2301)
 }
 
 
