@@ -361,6 +361,7 @@ function addFormElement(formElementObj) {
 
      DefaultformData.push(element);
      updateFormCanvas();
+     showToast(`${element.type} added in the form!`);
 }
 
 function deleteElement(e) {
@@ -386,6 +387,28 @@ function generateFormHTML(html) {
 function copyHTML() {
      const html = generateFormHTML(document.getElementById('previewForm').innerHTML);
      navigator.clipboard.writeText(html);
+}
+
+function showToast(message) {
+     const toastContainer = document.getElementById('toastContainer');
+     const toastBox = document.createElement('p');
+     toastBox.classList.add('toast-box');
+     toastContainer.appendChild(toastBox);
+
+     setTimeout(() => {
+          toastBox.textContent = message;
+          toastBox.classList.remove('hide');
+          toastBox.classList.add('show');
+     })
+
+     setTimeout(() => {
+          toastBox.classList.remove('show');
+          toastBox.classList.add('hide');
+     }, 1500);
+
+     setTimeout(() => {
+          toastContainer.removeChild(toastBox);
+     },1801)
 }
 
 
@@ -431,16 +454,19 @@ componentHeaders.forEach(header => {
 document.getElementById('saveBtn').onclick = () => {
      generateFormPreview();
      console.log(JSON.stringify(DefaultformData, null, 2));
+     showToast("Saved, Check the console!");
 }
 
 document.getElementById('copyHtmlBtn').onclick = () => {
      copyHTML();
+     showToast('HTML copied in the clipboard!')
 }
 
 
-
+// Initial loads
 setExistingTheme();
 
 updateFormCanvas();
 
+generateFormPreview();
 

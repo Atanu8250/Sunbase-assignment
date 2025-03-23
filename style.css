@@ -406,6 +406,43 @@ header.navbar {
      color: var(--border-color);
 }
 
+.toast-container{
+     position: fixed;
+     bottom:0;
+     right: 0;
+     display: flex;
+     flex-direction: column;
+     gap: 0.5rem;
+     background: transparent;
+}
+
+.toast-box{
+     text-transform: uppercase;
+     position: relative;
+     bottom: 1rem;
+     right: -100%;
+     background-color: var(--bg-color);
+     padding: 0.5rem 1rem;
+     text-wrap: balance;
+     transition: right 0.3s;
+     font-weight: 600;
+     box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+}
+
+.toast-box::before{
+     content: '🔔 ';
+}
+
+.toast-box.hide{
+     transition: right 0.3s;
+     right: -100%;
+}
+
+.toast-box.show{
+     transition: right 0.3s;
+     right: 1rem;
+}
+
 @media (max-width: 768px) {
      .workspace {
           grid-template-columns: 1fr;
